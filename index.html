@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Компьютерные вирусы - как защитить свои данные</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f0f2f5;
+            color: #1a1a2e;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 25px;
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
+        }
+
+        .card h2 {
+            color: #16213e;
+            font-size: 1.5em;
+            margin-bottom: 18px;
+            border-left: 4px solid #e94560;
+            padding-left: 15px;
+        }
+
+        .card h3 {
+            color: #0f3460;
+            margin: 18px 0 12px 0;
+            font-size: 1.2em;
+        }
+
+        .warning {
+            background: #fff5f5;
+            border-left: 4px solid #e94560;
+        }
+
+        .info-block {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 18px;
+            margin: 15px 0;
+        }
+
+        .virus-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .virus-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .virus-list li:last-child {
+            border-bottom: none;
+        }
+
+        .path-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .path-item {
+            background: #eef2ff;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .sign-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .sign-item {
+            background: #fef3c7;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .stat {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            flex: 1;
+            min-width: 100px;
+            background: #eef2ff;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #e94560;
+        }
+
+        .quiz-card {
+            background: #fefaf5;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #e94560;
+        }
+
+        .quiz-question {
+            margin-bottom: 28px;
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .quiz-question p {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1em;
+            color: #16213e;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: #fafafa;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .quiz-option:hover {
+            background: #f0f0f0;
+        }
+
+        .quiz-option input {
+            width: 18px;
+            height: 18px;
+            accent-color: #e94560;
+            cursor: pointer;
+        }
+
+        .quiz-option label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .quiz-btn {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+            margin-top: 15px;
+        }
+
+        .quiz-btn:hover {
+            background: #c72a4a;
+        }
+
+        .quiz-result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 6px;
+            display: none;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .result-bad {
+            background: #fee2e2;
+            border-left: 4px solid #dc2626;
+            color: #991b1b;
+        }
+
+        .result-mid {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            color: #92400e;
+        }
+
+        .result-good {
+            background: #dcfce7;
+            border-left: 4px solid #16a34a;
+            color: #166534;
+        }
+
+        .reset-btn {
+            background: #e0e0e0;
+            color: #333333;
+            border: 1px solid #cccccc;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: #d0d0d0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #666666;
+            font-size: 0.85em;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 30px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.4em; }
+            .card h2 { font-size: 1.3em; }
+            .container { padding: 15px; }
+            .stat { flex-direction: column; }
+            .sign-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Компьютерные вирусы</h1>
+            <p>Как защитить свои данные и не стать жертвой киберпреступников</p>
+        </div>
+
+        <div class="card">
+            <h2>Что такое компьютерный вирус?</h2>
+            <p>Компьютерный вирус - это вредоносная программа, которая способна создавать свои копии и внедряться в код других программ, системные области памяти, загрузочные секторы, а также распространять свои копии по разнообразным каналам. Главное отличие вируса от других вредоносных программ - способность к саморазмножению.</p>
+            <div class="info-block">
+                <p><strong>Основные характеристики вируса:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Способность к самовоспроизведению (размножению)</li>
+                    <li>Скрытность (маскировка под обычные файлы)</li>
+                    <li>Способность наносить вред (уничтожение или изменение данных)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Основные виды вредоносных программ</h2>
+            <ul class="virus-list">
+                <li><strong>Компьютерные вирусы</strong> - внедряются в исполняемые файлы и распространяются при их запуске.</li>
+                <li><strong>Троянские программы (трояны)</strong> - маскируются под полезное ПО, но выполняют скрытые вредоносные действия (кража паролей, установка "задних дверей").</li>
+                <li><strong>Программы-черви</strong> - распространяются самостоятельно по компьютерным сетям, не требуя участия пользователя.</li>
+                <li><strong>Логические бомбы</strong> - активируются при определённых условиях (дата, время, действие) и выполняют разрушительные функции.</li>
+                <li><strong>Программы-шпионы (Spyware)</strong> - собирают личную информацию пользователя без его ведома.</li>
+                <li><strong>Программы-вымогатели (Ransomware)</strong> - блокируют доступ к файлам и требуют выкуп за их расшифровку.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Пути проникновения вирусов на компьютер</h2>
+            <div class="path-list">
+                <span class="path-item">Интернет</span>
+                <span class="path-item">Электронная почта</span>
+                <span class="path-item">Съёмные носители (флешки)</span>
+                <span class="path-item">Пиратское ПО</span>
+                <span class="path-item">Локальная сеть</span>
+                <span class="path-item">Ремонтные службы</span>
+                <span class="path-item">Социальные сети</span>
+                <span class="path-item">Мессенджеры</span>
+            </div>
+            <p style="margin-top: 15px;">Наиболее опасными источниками являются интернет и электронная почта, так как через них вирусы могут распространяться мгновенно по всему миру.</p>
+        </div>
+
+        <div class="card warning">
+            <h2>Признаки заражения компьютера</h2>
+            <div class="sign-list">
+                <span class="sign-item">Замедление работы</span>
+                <span class="sign-item">Частые зависания</span>
+                <span class="sign-item">Невозможность загрузки ОС</span>
+                <span class="sign-item">Появление неизвестных файлов</span>
+                <span class="sign-item">Изменение размеров файлов</span>
+                <span class="sign-item">Самопроизвольное открытие окон</span>
+                <span class="sign-item">Пропажа данных</span>
+                <span class="sign-item">Необычная активность дисковода</span>
+            </div>
+            <p style="margin-top: 15px;"><strong>Важно:</strong> Эти симптомы могут быть вызваны и другими причинами, поэтому компьютер следует регулярно диагностировать.</p>
+        </div>
+
+        <div class="card">
+            <h2>Как защитить себя от вирусов</h2>
+            <div class="info-block">
+                <p><strong>Основные меры защиты:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Установите лицензионный антивирус и регулярно обновляйте его базы</li>
+                    <li>Не открывайте подозрительные письма и ссылки</li>
+                    <li>Скачивайте программы только с официальных сайтов</li>
+                    <li>Регулярно делайте резервные копии важных данных</li>
+                    <li>Используйте сложные пароли и двухфакторную аутентификацию</li>
+                    <li>Обновляйте операционную систему и программы</li>
+                    <li>Не подключайте к компьютеру неизвестные съёмные носители</li>
+                    <li>Будьте осторожны при использовании общедоступных Wi-Fi сетей</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Результаты опроса</h2>
+            <p>Я провёл опрос среди 30 учащихся 9-11 классов. Вот что получилось:</p>
+            <div class="stat">
+                <div class="stat-item">
+                    <div class="stat-number">70%</div>
+                    <div>сталкивались с вирусами</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">45%</div>
+                    <div>постоянно используют антивирус</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">40%</div>
+                    <div>никогда не делают резервные копии</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">65%</div>
+                    <div>хотят узнать больше о защите</div>
+                </div>
+            </div>
+            <p style="margin-top: 10px;">Большинство опрошенных сталкивались с вирусами, но при этом многие пренебрегают правилами цифровой безопасности.</p>
+        </div>
+
+        <div class="quiz-card">
+            <h2>Тест: «Насколько ты защищён?»</h2>
+            <p style="margin-bottom: 20px;">Ответь на 6 вопросов - получи персональную рекомендацию по безопасности.</p>
+
+            <div id="quizContainer">
+                <div class="quiz-question">
+                    <p>1. Используешь ли ты антивирусное программное обеспечение?</p>
+                    <div class="quiz-option" onclick="document.getElementById('q1_1').click()">
+                        <input type="radio" name="q1" id="q1_1" value="0"> <label for="q1_1">Нет, не использую</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q1_2').click()">
+                        <input type="radio" name="q1" id="q1_2" value="1"> <label for="q1_2">Использую, но не обновляю</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q1_3').click()">
+                        <input type="radio" name="q1" id="q1_3" value="2"> <label for="q1_3">Да, использую и регулярно обновляю</label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p>2. Как ты поступаешь с подозрительными письмами от неизвестных отправителей?</p>
+                    <div class="quiz-option" onclick="document.getElementById('q2_1').click()">
+                        <input type="radio" name="q2" id="q2_1" value="0"> <label for="q2_1">Открываю и смотрю вложения</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q2_2').click()">
+                        <input type="radio" name="q2" id="q2_2" value="1"> <label for="q2_2">Иногда открываю, если интересно</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q2_3').click()">
+                        <input type="radio" name="q2" id="q2_3" value="2"> <label for="q2_3">Удаляю сразу, не открывая</label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p>3. Как часто ты делаешь резервные копии важных данных?</p>
+                    <div class="quiz-option" onclick="document.getElementById('q3_1').click()">
+                        <input type="radio" name="q3" id="q3_1" value="0"> <label for="q3_1">Никогда</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q3_2').click()">
+                        <input type="radio" name="q3" id="q3_2" value="1"> <label for="q3_2">Очень редко</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q3_3').click()">
+                        <input type="radio" name="q3" id="q3_3" value="2"> <label for="q3_3">Регулярно, раз в месяц или чаще</label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p>4. Откуда ты скачиваешь программы и игры?</p>
+                    <div class="quiz-option" onclick="document.getElementById('q4_1').click()">
+                        <input type="radio" name="q4" id="q4_1" value="0"> <label for="q4_1">С любых сайтов, где есть ссылка</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q4_2').click()">
+                        <input type="radio" name="q4" id="q4_2" value="1"> <label for="q4_2">С торрентов и пиратских сайтов</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q4_3').click()">
+                        <input type="radio" name="q4" id="q4_3" value="2"> <label for="q4_3">Только с официальных сайтов</label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p>5. Используешь ли ты один и тот же пароль для разных аккаунтов?</p>
+                    <div class="quiz-option" onclick="document.getElementById('q5_1').click()">
+                        <input type="radio" name="q5" id="q5_1" value="0"> <label for="q5_1">Да, везде один пароль</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q5_2').click()">
+                        <input type="radio" name="q5" id="q5_2" value="1"> <label for="q5_2">Использую несколько паролей для разных сервисов</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q5_3').click()">
+                        <input type="radio" name="q5" id="q5_3" value="2"> <label for="q5_3">Для каждого сервиса уникальный пароль</label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p>6. Как ты реагируешь на всплывающие окна с предложением срочно обновить программу или проверить компьютер?</p>
+                    <div class="quiz-option" onclick="document.getElementById('q6_1').click()">
+                        <input type="radio" name="q6" id="q6_1" value="0"> <label for="q6_1">Перехожу по ссылке и устанавливаю</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q6_2').click()">
+                        <input type="radio" name="q6" id="q6_2" value="1"> <label for="q6_2">Иногда нажимаю, если похоже на правду</label>
+                    </div>
+                    <div class="quiz-option" onclick="document.getElementById('q6_3').click()">
+                        <input type="radio" name="q6" id="q6_3" value="2"> <label for="q6_3">Всегда закрываю такие окна</label>
+                    </div>
+                </div>
+
+                <button class="quiz-btn" onclick="calculateQuizResult()">Узнать результат</button>
+                <div id="quizResult" class="quiz-result"></div>
+                <button class="reset-btn" onclick="resetQuiz()">Пройти тест заново</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Какие антивирусы существуют?</h2>
+            <div class="info-block">
+                <p><strong>Популярные антивирусные программы:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Kaspersky (Лаборатория Касперского) - один из лидеров по защите</li>
+                    <li>Dr.Web - отечественный антивирус с хорошей репутацией</li>
+                    <li>ESET NOD32 - быстрый и эффективный</li>
+                    <li>Avast - бесплатная версия с базовой защитой</li>
+                    <li>Bitdefender - мощная защита от неизвестных угроз</li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>Совет:</strong> Лучший антивирус - тот, который регулярно обновляется и включён постоянно. Даже бесплатные версии обеспечивают базовый уровень защиты.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Проектная работа Якута Ивана, 10 «А» класс</p>
+            <p>МБОУ СОШ №116 им. П.И. Селезнёва, г. Краснодар</p>
+            <p>2026 год</p>
+        </div>
+    </div>
+
+    <script>
+        function calculateQuizResult() {
+            let q1 = document.querySelector('input[name="q1"]:checked');
+            let q2 = document.querySelector('input[name="q2"]:checked');
+            let q3 = document.querySelector('input[name="q3"]:checked');
+            let q4 = document.querySelector('input[name="q4"]:checked');
+            let q5 = document.querySelector('input[name="q5"]:checked');
+            let q6 = document.querySelector('input[name="q6"]:checked');
+
+            if (!q1 || !q2 || !q3 || !q4 || !q5 || !q6) {
+                alert('Пожалуйста, ответь на все 6 вопросов');
+                return;
+            }
+
+            let total = parseInt(q1.value) + parseInt(q2.value) + parseInt(q3.value) + 
+                        parseInt(q4.value) + parseInt(q5.value) + parseInt(q6.value);
+
+            let resultDiv = document.getElementById('quizResult');
+            let message = '';
+            let resultClass = '';
+
+            if (total <= 4) {
+                resultClass = 'result-bad';
+                message = '<strong>Низкий уровень защиты.</strong> Ты в зоне риска! Твой компьютер и данные под угрозой. Ты совсем не заботишься о безопасности, что может привести к заражению или краже данных.<br><br><strong>Что делать:</strong> Немедленно установи антивирус, никогда не открывай подозрительные письма и ссылки, начни делать резервные копии важных файлов. Безопасность - это важно!';
+            } 
+            else if (total <= 8) {
+                resultClass = 'result-mid';
+                message = '<strong>Средний уровень защиты.</strong> Ты знаешь об основах безопасности, но есть пробелы. Твои действия защищают компьютер не полностью.<br><br><strong>Что делать:</strong> Обнови антивирус, перестань скачивать файлы из сомнительных источников, используй уникальные пароли для каждого сервиса. Небольшие изменения в привычках значительно повысят твою защиту.';
+            }
+            else {
+                resultClass = 'result-good';
+                message = '<strong>Высокий уровень защиты.</strong> Отлично! Ты хорошо заботишься о своей цифровой безопасности. Твои привычки значительно снижают риск заражения и кражи данных.<br><br><strong>Что делать:</strong> Продолжай соблюдать правила безопасности и поделись этой информацией с друзьями - многим из них это может быть полезно.';
+            }
+
+            resultDiv.className = 'quiz-result ' + resultClass;
+            resultDiv.innerHTML = message;
+            resultDiv.style.display = 'block';
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function resetQuiz() {
+            let radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => radio.checked = false);
+            let resultDiv = document.getElementById('quizResult');
+            resultDiv.style.display = 'none';
+            resultDiv.innerHTML = '';
+            document.querySelector('.quiz-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>
